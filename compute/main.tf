@@ -5,7 +5,7 @@ data "aws_ami" "linux" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    values = ["ami-01cc34ab2709337aa"]
   }
 
   filter {
