@@ -1,11 +1,12 @@
 # --- compute/main.tf ---
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
+data "aws_ami" "default" {
+  count       = var.ami == "" ? 1 : 0
+  most_recent = "true"
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/ubuntu-*-*-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
   }
 
   filter {
