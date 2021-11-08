@@ -4,7 +4,7 @@ data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
-    name   = "name"
+    name   = "Ubuntu Server 20.04 LTS"
     values = ["ami-083654bd07b5da81d"]
   }
 
