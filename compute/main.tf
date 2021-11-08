@@ -16,7 +16,7 @@ data "aws_ami" "ubuntu" {
   owners = ["amazon"]
 }
 
-resource "aws_launch_template" "web" {
+resource "Ubuntu Server 20.04 LTS" "web" {
   name_prefix            = "web"
   image_id               = data.ami-083654bd07b5da81d
   instance_type          = var.t2.micro
