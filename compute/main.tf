@@ -1,6 +1,6 @@
 # --- compute/main.tf ---
 
-data "aws_ami" "linux" {
+data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
@@ -18,7 +18,7 @@ data "aws_ami" "linux" {
 
 resource "aws_launch_template" "web" {
   name_prefix            = "web"
-  image_id               = data.aws_ami.linux.id
+  image_id               = data.aws_ami.ubuntu.id
   instance_type          = var.web_instance_type
   vpc_security_group_ids = [var.web_sg]
   user_data              = filebase64("install_apache.sh")
