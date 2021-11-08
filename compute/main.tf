@@ -5,7 +5,7 @@ data "aws_ami" "ubuntu" {
 
   filter {
     name   = "name"
-    values = ["Ubuntu Server 20.04 LTS"]
+    values = ["ubuntu/images/ubuntu-*-*-amd64-server-*"]
   }
 
   filter {
