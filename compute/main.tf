@@ -18,8 +18,8 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_launch_template" "web" {
   name_prefix            = "web"
-  image_id               = data.aws_ami.linux.id
-  instance_type          = var.web_instance_type
+  image_id               = data.ami-083654bd07b5da81d
+  instance_type          = var.t2.micro
   vpc_security_group_ids = [var.web_sg]
   user_data              = filebase64("install_apache.sh")
 
