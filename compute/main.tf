@@ -1,10 +1,6 @@
 # --- compute/main.tf ---
-locals {
-   ami                    = var.ami != "" ? var.ami : join("", data.aws_ami.default.*.image_id)
-}
-data "aws_ami" "default" {
-  count       = var.ami == "" ? 1 : 0
-  most_recent = "true"
+data "aws_ami" "linux" {
+  most_recent = true
 
   filter {
     name   = "name"
