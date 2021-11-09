@@ -1,6 +1,6 @@
 # --- comput/variables.tf ---
 
-variable "sg" {}
+variable "sg-0b9af85e1492fe988" {}
 variable "public_subnet" {}
 
 
