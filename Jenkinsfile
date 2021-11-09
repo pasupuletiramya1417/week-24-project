@@ -4,7 +4,6 @@ pipeline {
     parameters {
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
         string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
-        booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
     }
     
     environment {
@@ -53,7 +52,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "terraform apply -input=false tfplan"
+                sh "terraform apply -input=false tfplan.txt"
             }
         }
     }
