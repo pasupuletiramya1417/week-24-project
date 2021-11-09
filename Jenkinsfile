@@ -53,7 +53,7 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "terraform apply -input=false tfplan.txt"
+                sh "terraform apply -input=false"
             }
         }
     }
