@@ -41,7 +41,11 @@ pipeline {
                     equals expected: true, actual: params.autoApprove
                 }
             }
-            
+           stage('Apply') {
+            steps {
+                sh "terraform apply -input=false tfplan"
+            }
+          }  
         }
 
         stage('Apply') {
