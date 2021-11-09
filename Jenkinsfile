@@ -23,7 +23,40 @@ pipeline {
                         }
                     }
                 }
+       
+        stage('Plan') {
+            steps {
+                script {
+                    currentBuild.displayName = params.version
+                }
+                sh 'terraform init -input=false'
+                sh 'terraform workspace select ${environment}'
+                sh 'terraform plan -input=false'
+                
             }
+        }
+
+        stage('Approval') {
+            when {
+                not {
+                    equals expected: true, actual: params.autoApprove
+                }
+            }
+           steps {
+                script {
+                    def plan = readFile 'tfplan.txt'
+                    input message: "Do you want to apply the plan?",
+                        parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: 'plan')]
+                }
+            }
+        }
+
+        stage('Apply') {
+            steps {
+                sh "terraform apply -input=false -auto-approve"
+            }
+        }
+		      }
         stage ('Release') {
            steps {
 		script {
@@ -57,38 +90,6 @@ pipeline {
 					sh "echo Finished create/update successfully!"
 				}
                          }
-		}
-        stage('Plan') {
-            steps {
-                script {
-                    currentBuild.displayName = params.version
-                }
-                sh 'terraform init -input=false'
-                sh 'terraform workspace select ${environment}'
-                sh 'terraform plan -input=false'
-                
-            }
-        }
-
-        stage('Approval') {
-            when {
-                not {
-                    equals expected: true, actual: params.autoApprove
-                }
-            }
-           steps {
-                script {
-                    def plan = readFile 'tfplan.txt'
-                    input message: "Do you want to apply the plan?",
-                        parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: 'plan')]
-                }
-            }
-        }
-
-        stage('Apply') {
-            steps {
-                sh "terraform apply -input=false -auto-approve"
-            }
-        }
+		    }
     }
 }
