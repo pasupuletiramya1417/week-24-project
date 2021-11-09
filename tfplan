@@ -1,0 +1,25 @@
+STATE_DIR = _state
+
+# Clean terraform modules
+clean:
+	rm -rf ./.terraform
+
+# Check if the required variables have been passed
+.check-env:
+	@if test "$(REGION)" = "" ; then echo "REGION not set"; exit 1; fi
+	@if test "$(ENV)" = "" ; then echo "ENV not set"; exit 1; fi
+	@if test "$(ENV_TYPE)" = "" ; then echo "ENV_TYPE not set"; exit 1; fi
+	@if test "$(OWNER)" = "" ; then echo "OWNER not set"; exit 1; fi
+
+plan: .check-env
+	terraform get
+	terraform plan -state=$(STATE_DIR)/$${REGION}-$${ENV}-$${ENV_TYPE}.tfstate \
+		-var region="$${REGION}" -var env="$${ENV}" -var env-type="$${ENV_TYPE}" -var owner="$${OWNER}" \
+		$${ARGS}
+
+# Deploy resources. ARGS is an env. variable
+apply: .check-env
+	terraform get
+	terraform apply -state=$(STATE_DIR)/$${REGION}-$${ENV}-$${ENV_TYPE}.tfstate \
+		-var region="$${REGION}" -var env="$${ENV}" -var env-type="$${ENV_TYPE}" -var owner="$${OWNER}" \
+		$${ARGS}
