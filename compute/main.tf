@@ -1,10 +1,10 @@
 # --- compute/main.tf ---
-data "aws_ami" "linux" {
+data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    values = ["ami-083654bd07b5da81d"]
   }
 
   filter {
@@ -19,7 +19,7 @@ resource "aws_launch_template" "web" {
   name_prefix            = "web"
   image_id               = "ami-083654bd07b5da81d"
   instance_type          = "t2.micro"
-  vpc_security_group_ids = [var.web_sg]
+  vpc_security_group_ids = [var.sg]
   user_data              = filebase64("install_apache.sh")
 
   tags = {
