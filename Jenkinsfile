@@ -32,7 +32,7 @@ pipeline {
                 sh 'terraform init -input=false'
                 sh 'terraform workspace select ${environment}'
                 sh 'terraform plan -input=false'
-                sh 'terraform show -no-color tfplan > tfplan.txt'
+                
             }
         }
 
