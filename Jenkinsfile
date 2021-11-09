@@ -41,11 +41,13 @@ pipeline {
                     equals expected: true, actual: params.autoApprove
                 }
             }
-           stage('Apply') {
-            steps {
-                sh "terraform apply -input=false tfplan"
+           steps {
+                script {
+                    def plan = readFile 'tfplan.txt'
+                    input message: "Do you want to apply the plan?",
+                        parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: 'plan')]
+                }
             }
-          }  
         }
 
         stage('Apply') {
