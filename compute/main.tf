@@ -6,6 +6,7 @@ data "aws_ami" "ubuntu" {
     name   = "name"
     values = ["ami-083654bd07b5da81d"]
   }
+   owners = ["amazon"]
 }
 
 
