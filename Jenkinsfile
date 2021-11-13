@@ -55,7 +55,7 @@ pipeline {
         stage('Apply') {
             steps {
                 sh "terraform apply -input=false -auto-approve"
-                sh "terraform destroy -input=false -auto-approve"
+                sh "terraform destroy -target=aws_cloudformation_stack.network -input=false -auto-approve"
             }
         } 
     }
